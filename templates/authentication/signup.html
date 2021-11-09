@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400,300">
+
+    <style>
+    form {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    label,input {
+    /* In order to define widths */
+        display: inline-block;
+        margin:10px;
+    }
+
+    label {
+        width: 30%;
+        /* Positions the label text beside the input */
+        text-align: right;
+    }
+
+    label+input {
+        width: 30%;
+        /* Large margin-right to force the next element to the new-line
+           and margin-left to create a gutter between the label and input */
+        margin: 0 30% 0 4%;
+    }
+
+    .btn {
+        margin:20px;
+    }
+    </style>
+</head>
+<body style="background-color: black; padding:30px">
+     {% for message in messages %}
+    <div class="alert alert-{{ messages.tags }} alert-dismissible fade show" role="alert">
+        <strong>Message:</strong>{{ message }}
+        <button type="button" class="close" data-dismiss="'alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+<div class="container" style=" padding:50px; color:#20AA76; border-style:ridge; border-color:#0C3C26; text-align:center">
+    <h3>Sign Up</h3>
+    <form action="/signup" method="post">
+    {% csrf_token %}
+        <label for="">Username*</label>
+        <input type="text" id="username" name="username" placeholder="Create a username(only letters and numbers)" Required>
+        <br>
+        <label for="">First Name*</label>
+        <input type="text" id="fname" name="fname" placeholder="Enter your first name" Required>
+        <br>
+        <label for="">Last Name*</label>
+        <input type="text" id="lname" name="lname" placeholder="Enter your last name" Required>
+        <br>
+        <label for="">Email</label>
+        <input type="text" id="email" name="email" placeholder="Enter your email address">
+        <br>
+        <label for="">Password*</label>
+        <input type="password" id="pass1" name="pass1" placeholder="Enter your password" Required>
+        <br>
+        <label for="">Confirm your password*</label>
+        <input type="password" id="pass2" name="pass2" placeholder="Confirm your password" Required>
+        <br>
+        <button type="submit" class="btn btn-success">Sign Up</button>
+
+    </form>
+
+    <p><i>Fields marked * are mandatory.</i></p>
+</div>
+</body>
+</html>

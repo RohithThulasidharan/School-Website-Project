@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication</title>
+
+  <style>
+        th,td {
+            border: 1px black solid;
+           }
+
+        * {
+	        margin: 0;
+	        padding: 0;
+	        box-sizing: border-box;
+        }
+        body {
+	        font-family: 'Montserrat', sans-serif;
+        }
+        .header {
+            margin: auto;
+            background-color: #20AA76;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+	        width: 100%;
+	        height: 100%;
+	        margin-left:0%;
+        }
+        nav {
+	        position: fixed;
+	        display: flex;
+	        align-items: flex-start;
+	        width: 40%;
+	        height: 100%;
+	        background-color: black;
+            }
+        main {
+	        position: fixed;
+	        right: 0;
+	        width: 80%;
+	        height: 100%;
+	        background-color: #fff;
+	        overflow: auto;
+	        padding: 40px;
+            }
+        h1 {
+	        font-weight: bold;
+	        margin-bottom: 50px;
+	        font-size: 55px;
+	        text-align: center;
+        }
+        p {
+	        margin-bottom: 20px;
+	        line-height: 26px;
+            }
+        li, ul label.title, ul, a {
+	        width: 100%;
+	        color: #FFF;
+	        font-family: 'Montserrat', 'Open Sans', sans-serif;
+	        display: block;
+	        font-weight: bold;
+        }
+        ul label {
+	        height: 35px;
+        }
+        ul li{
+	        height: 35px;
+	        overflow: hidden;
+	        transition: all .3s;
+            }
+        li {
+	        display: block;
+	        background-color: #363636;
+        }
+        label.title {
+	        font-size: 14px;
+	        background: linear-gradient(#111, #2f2f2f);
+	        padding: 10px 15px;
+	        cursor: pointer;
+            transition: all .25s;
+           }
+        a{
+	        font-size: 12px;
+	        text-decoration: none;
+	        color: #20AA76;
+	        display: block;
+	        padding: 10px 25px;
+	        transition: all .25s;
+        }
+        a:hover {
+	        background-color: #444;
+        box-shadow: inset 5px 0px 0px 0px #fff;
+        }
+        label:hover {
+	        text-shadow: 0px 0px 10px #fff;
+        }
+        input[type="radio"] {
+	       display: none;
+        }
+        #edit:checked + li, #archive:checked + li, #tools:checked + li, #preferences:checked + li {
+	    height: 179px;
+        }
+        i {
+	        margin-right: 12px;
+        }
+        @media screen and (max-width: 600px){
+	        nav {
+		        width: 100%;
+		        position: relative;
+	        }
+	        main {
+		        width: 100%;
+		        position: relative;
+	        }
+            }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400,300">
+</head>
+
+<body style="background-color: black">
+    {% for message in messages %}
+    <div class="alert alert-{{ messages.tags }} alert-dismissible fade show" role="alert" style="margin: auto; text-align:center">
+        <strong>Message:</strong>{{ message }}
+        <button type="button" class="close" data-dismiss="'alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+    <div>
+        {% if user.is_authenticated %}
+        <div class="header">
+            <div class="row">
+                <div class="col-md-6 offset-3" >
+                    <div><h2> Welcome to QB School of Higher Learning. </h2>
+                    </div>
+                </div>
+                <div class="col-md-2 offset-1">
+                    <div style="display:block;">
+                        <div style="margin:auto; width:50%; "><button type="submit" class="btn btn-dark btn-lg btn-block"> <a href="/signout" style="color: #20AA76">SignOut</a></button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--navbar and main elements inside container element-->
+        <div class="container" style="margin-left:0">
+		<nav class="menu">
+			<ul style="padding-left: 5px;">
+				<input type="radio" name="menu" id="archive" checked>
+				<li>
+					<label for="archive" class="title"><i class="fa fa-folder"></i>Student Corner</label>
+					<a href="/studentmarks" style="color: #20AA76;">Student Marks</a>
+					<a href="Ranksearch" style="color: #20AA76;">Rank List</a>
+					<a href="form" style="color: #20AA76;">New Student</a>
+				</li>
+				<input type="radio" name="menu" id="edit">
+				<li>
+					<label for="edit" class="title"><i class="fa fa-folder"></i>Administration</label>
+					<a href="#" style="color: #20AA76;">Establishment</a>
+					<a href="#" style="color: #20AA76;">Faculty</a>
+					<a href="#" style="color: #20AA76;">Resources</a>
+				</li>
+				<input type="radio" name="menu" id="tools">
+				<li>
+					<label for="tools" class="title"><i class="fa fa-folder"></i>About</label>
+					<a href="#" style="color: #20AA76;">History</a>
+					<a href="#" style="color: #20AA76;">Achievements</a>
+					<a href="#" style="color: #20AA76;">Gallery</a>
+					<a href="#" style="color: #20AA76;">Contact Us</a>
+				</li>
+			</ul>
+		</nav>
+		<main class="main" style="background-color: #111; color: white; padding-left:10%">
+			<h1>Our Vision</h1>
+			<p>To provide good quality modern education-including a strong component of culture, inculcation of values, awareness of the environment, adventure activities and physical education- to the talented children predominantly from the rural areas without regard to their family's socio-economic conditions.</p>
+		</main>
+        <br>
+        <br>
+        <br>
+	</div>
+
+        <!-- if user not authenticated, sign up and sign options will be displayed -->
+        {% else %}
+        <div class="header">
+            <div class="row">
+                <div class="col-md-6 offset-3" >
+                    <div><h2> Welcome to QB School of Higher Learning. </h2></div>
+                </div>
+            </div>
+        </div>
+        <div class="container" style="margin-left:auto; padding-top:10px; width:100%">
+            <div class="row" style="margin:auto; padding-left: 70px">
+                <div class="col-md-5" style="margin:10px; padding:10px; border-color:#0C3C26; border-style:solid; text-align:center">
+                        <p style="color:white">New User?</p>
+                        <button type="submit" class="btn btn-dark btn-lg btn-block"> <a href="/signup" style="color: #20AA76">SignUp</a></button>
+                </div>
+                <div class="col-md-5" style="margin:10px; padding:10px; border-color:#0C3C26; border-style:solid; text-align:center">
+                    <p style="color:#f1f1f1">Existing User?</p>
+                    <button type="submit" class="btn btn-dark btn-lg btn-block"> <a href="/signin" style="color: #20AA76">SignIn</a></button>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>

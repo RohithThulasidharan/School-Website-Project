@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Ranks</title>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+     <style>
+        th,td {
+            border: 1px black solid;
+           }
+
+        * {
+	        margin: 0;
+	        padding: 0;
+	        box-sizing: border-box;
+        }
+        body {
+	        font-family: 'Montserrat', sans-serif;
+        }
+        .header {
+            margin: auto;
+            background-color: #20AA76;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+	        width: 100%;
+	        height: 100%;
+	        margin-left:0%;
+        }
+        nav {
+	        position: fixed;
+	        display: flex;
+	        align-items: flex-start;
+	        width: 40%;
+	        height: 100%;
+	        background-color: black;
+            }
+        main {
+	        position: fixed;
+	        right: 0;
+	        width: 80%;
+	        height: 100%;
+	        background-color: #fff;
+	        overflow: auto;
+	        padding: 40px;
+            }
+        h1 {
+	        font-weight: bold;
+	        margin-bottom: 50px;
+	        font-size: 55px;
+	        text-align: center;
+        }
+        p {
+	        margin-bottom: 20px;
+	        line-height: 26px;
+            }
+        li, ul label.title, ul, a {
+	        width: 100%;
+	        color: #FFF;
+	        font-family: 'Montserrat', 'Open Sans', sans-serif;
+	        display: block;
+	        font-weight: bold;
+        }
+        ul label {
+	        height: 35px;
+        }
+        ul li{
+	        height: 35px;
+	        overflow: hidden;
+	        transition: all .3s;
+            }
+        li {
+	        display: block;
+	        background-color: #363636;
+        }
+        label.title {
+	        font-size: 14px;
+	        background: linear-gradient(#111, #2f2f2f);
+	        padding: 10px 15px;
+	        cursor: pointer;
+            transition: all .25s;
+           }
+        a{
+	        font-size: 12px;
+	        text-decoration: none;
+	        color: #20AA76;
+	        display: block;
+	        padding: 10px 25px;
+	        transition: all .25s;
+        }
+        a:hover {
+	        background-color: #444;
+        box-shadow: inset 5px 0px 0px 0px #fff;
+        }
+        label:hover {
+	        text-shadow: 0px 0px 10px #fff;
+        }
+        input[type="radio"] {
+	       display: none;
+        }
+        #edit:checked + li, #archive:checked + li, #tools:checked + li, #preferences:checked + li {
+	    height: 179px;
+        }
+        i {
+	        margin-right: 12px;
+        }
+        @media screen and (max-width: 600px){
+	        nav {
+		        width: 100%;
+		        position: relative;
+	        }
+	        main {
+		        width: 100%;
+		        position: relative;
+	        }
+            }
+    </style>
+</head>
+{% load static %}
+<body style="background-color: black">
+</br>
+<div class="header">
+    <div class="row">
+            <div class="col-md-6 offset-3" >
+                <div><h2> Welcome to School Management Web App</h2></div>
+            </div>
+            <div class="col-md-2 offset-1">
+                <div style="display:block;">
+                    <div style="margin:auto; width:50%"><button type="submit" class="btn btn-dark btn-lg btn-block"> <a href="/signout" style="color: #20AA76">SignOut</a></button></div>
+                </div>
+            </div>
+    </div>
+</div>
+</br>
+</br>
+
+<!--navbar and main elements inside container element-->
+<div class="container" style="margin-left:0">
+    {% include 'authentication/includes/navbar.html' %}
+    <main class="main" style="background-color: #111; color: white; padding-left:30px">
+        <div class="row" style="background-color: #0C4B33; padding-bottom:10px; width:80%; margin:auto;">
+                <div class="row" style="padding-top:10px;">
+                    <div class="col-md-6">
+                        <div style="margin:auto; width:35%"><h5>Type Classroom ID for rank list</h5></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="searchField" placeholder="Search class">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        </br>
+        <!--Results table-->
+        <div class="container" style="width:80%; margin: auto;">
+            <div class="table-output">
+                <table class="table table stripped table-hover">
+                    <thead style="color:white">
+                        <tr class="bg-success">
+                            <th>Classroom ID</th>
+                            <th>Student ID</th>
+                            <th>Student Name</th>
+                            <th>Total Marks</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-body">
+
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            <div style="width:100px; text-align:center">
+                <button type="submit" class="btn btn-dark btn-lg btn-block"> <a href="{% url 'home' %}" style="color: #20AA76">Back</a></button>
+            </div>
+        </div>
+    </main>
+</div>
+<!-- JavaScript -->
+<script>
+    const searchField=document.querySelector("#searchField");
+    const tableOutput = document.querySelector(".table-output");
+    tableOutput.style.display = "none";
+    const tbody = document.querySelector(".table-body");
+
+    searchField.addEventListener("keyup",(e) => {
+        const searchValue = e.target.value;
+        //console.log(searchValue)
+
+        if (searchValue.length>0){
+            console.log("searchValue",searchValue);
+            tbody.innerHTML = "";
+
+            fetch("/rankdisplay",{
+                body: JSON.stringify({searchText: searchValue }),
+                method: "POST",
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                console.log("data",data);
+                tableOutput.style.display = "block";
+
+                if (data.length === 0) {
+                    tableOutput.style.display = "none";
+                } else {
+                    data.forEach((item) => {
+
+                        tbody.innerHTML +=`
+                            <tr class="table-success">
+                                <td>${item.classroomid_id}</td>
+                                <td>${item.studentid_id}</td>
+                                <td>${item.studentid_id.studentname}</td>
+                                <td>${item.total}</td>
+
+                            </tr>`;
+                    });
+                }
+            });
+        } else {
+        tableOutput.style.display='none';
+
+    }
+    });
+</script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+
