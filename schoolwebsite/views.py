@@ -32,12 +32,13 @@ class PasswordPolicyView(View):
     def post(self, request):
         data = json.loads(request.body)
         pwd = data['pass1']
-        regex = "^(?=.{10,}$)(?=.*[a-zA-Z])(?=.*[0-9])(?=.*\W).*$"
+        regex = "^(?=.{8,}$)(?=.*[a-zA-Z])(?=.*[0-9])(?=.*\W).*$"
         p = re.compile(regex)
 
         if len(pwd) < 8 or (not re.search(p, pwd)):
             return JsonResponse({'password_error': 'Password should contain a minimum of 8 characters,'
-                                                   ' which has letters, numbers, and special characters'}, status=400)
+                                                   ' which has letters, numbers, and special characters'},
+                                status=400)
         return JsonResponse({'password_valid': True})
 
 
