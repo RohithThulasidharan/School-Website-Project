@@ -139,7 +139,7 @@
 
 <!--navbar and main elements inside container element-->
 <div class="container" style="margin-left:0">
-    {% include 'authentication/includes/navbar.html' %}
+    {% include 'schoolwebsite/includes/navbar.html' %}
     <main class="main" style="background-color: #111; color: white; padding-left:30px">
         <div class="row" style="background-color: #0C4B33; padding-bottom:10px; width:80%; margin:auto;">
                 <div class="row" style="padding-top:10px;">
@@ -213,7 +213,7 @@
                             <tr class="table-success">
                                 <td>${item.classroomid_id}</td>
                                 <td>${item.studentid_id}</td>
-                                <td>${item.studentid_id.studentname}</td>
+                                <td>${item.studentid_name}</td>
                                 <td>${item.total}</td>
 
                             </tr>`;

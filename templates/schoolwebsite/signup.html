@@ -34,6 +34,12 @@
         margin: 0 30% 0 4%;
     }
 
+    .invalid_feedback {
+        margin: 0 35% 0 40%;
+        display: inline-block;
+        color: red;
+    }
+
     .btn {
         margin:20px;
     }
@@ -66,6 +72,9 @@
         <br>
         <label for="">Password*</label>
         <input type="password" id="pass1" name="pass1" placeholder="Enter your password" Required>
+        <div class="invalid_feedback" style="display:none">
+
+        </div>
         <br>
         <label for="">Confirm your password*</label>
         <input type="password" id="pass2" name="pass2" placeholder="Confirm your password" Required>
@@ -76,5 +85,50 @@
 
     <p><i>Fields marked * are mandatory.</i></p>
 </div>
+
+<script>
+    const pass1 = document.querySelector('#pass1');
+    const feedBackArea = document.querySelector(".invalid_feedback");
+    pass1.addEventListener("keyup", (e) => {
+
+        const passwordVal = e.target.value;
+
+        pass1.classList.remove("is-invalid");
+        feedBackArea.style.display = "none";
+
+        if (passwordVal.length > 0) {
+            fetch("/password-policy",{
+                body: JSON.stringify({ pass1: passwordVal}),
+                method: "POST",
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log("data", data);
+                if(data.password_error) {
+                    pass1.classList.add("is-invalid");
+                    feedBackArea.style.display = "block";
+                    feedBackArea.innerHTML= `<p>${data.password_error}</p>`;
+                }
+            });
+        }
+    });
+</script>
 </body>
 </html>
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.

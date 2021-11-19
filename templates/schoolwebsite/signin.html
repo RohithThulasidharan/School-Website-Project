@@ -13,6 +13,7 @@
     form {
         width: 80%;
         margin: 0 auto;
+        text-align: center;
     }
 
     label,input {
@@ -22,16 +23,16 @@
     }
 
     label {
-        width: 30%;
+        width: 10%;
         /* Positions the label text beside the input */
         text-align: right;
     }
 
     label+input {
-        width: 30%;
+        width: 50%;
         /* Large margin-right to force the next element to the new-line
            and margin-left to create a gutter between the label and input */
-        margin: 0 30% 0 4%;
+        margin: 0 15% 0 4%;
     }
 
     .btn {
@@ -48,8 +49,8 @@
         </button>
     </div>
     {% endfor %}
-    <div class="container" style="margin-top:100px; width:50%; padding:20px; color:#20AA76; border-style:ridge; border-color:#0C3C26; text-align:center; background: linear-gradient(to right, rgba(106, 133, 182, 0.5), rgba(186, 200, 224, 0.5)" >
-        <div class="col-md-8 " style=" padding: 20px; width: 100%;)">
+    <div class="container" style="margin-top:100px; width:50%; padding:20px; color:#20AA76; border-style:ridge; border-color:#0C3C26; text-align:center; background: black" >
+        <div class="col-md-8 " style="margin: auto; width: 100%;)">
             <h3>Sign In</h3>
             <form action="/signin" method="post">
              {% csrf_token %}
